@@ -1,41 +1,67 @@
 import React, { useEffect, useState } from "react";
 import { getRandomBeer, getBeerbyID } from "../API";
 
-import { Wrapper, Banner, BottomHomeWrapper, BeerImg } from "./styles";
+import { Wrapper, Banner, BannerText, BottomHomeWrapper, LabelWrapper, Label, Button, StatsWrapper } from "./styles";
 
-import defaultImg from '../assets/images/no-image-size740x480.jpg';
+interface RandomBeer {
+  abv: string;
+  createDate: string;
+  id: string;
+  isRetired: string;
+  name: string;
+  nameDisplay: string;
+  status: string;
+  statusDisplay: string;
+  style: {},
+  styleId: string;
+  updateDate: string;
+}
+
+interface Labels {
+  contentAwareIcon: string;
+  contentAwareLarge: string;
+  contentAwareMedium: string;
+  icon: string;
+  large: string;
+  medium: string;
+}
 
 const Home = () => {
-  const [beer, setBeer] = useState<any>(null);
-  const [beerImg, setBeerImg] = useState<string>("");
 
-  const test: String = 'http://qnimate.com/wp-content/uploads/2014/03/images2.jpg';
+  const [beer, setBeer] = useState<RandomBeer | null>(null);
+  const [labels, setLabels] = useState<Labels | null>(null);
 
   useEffect(() => {
-    getRandomBeer()
-      .then((data) => {
-        console.log(data.data.data);
-        setBeer(data.data.data);
+    // generateRandomBeer();
+  }, []);
 
-        getBeerbyID(data.data.data.id)
-        .then((data2) => {
-          console.log(data2.data.data.labels)
-          setBeerImg(data2.data.data.labels.icon)
-        })
-        .catch((err) => console.log(err))
+  const generateRandomBeer = () => {
+    getRandomBeer()
+      .then((rdmBeer: RandomBeer) => {
+        setBeer(rdmBeer);
+        getBeerbyID(rdmBeer.id)
+          .then((beerById: any) => {
+            console.log(`>Beer Labels: ${beerById.labels}`)
+            setLabels(beerById.labels);
+          })
+          .catch((err) => console.log(err))
       })
       .catch((err) => console.log(err));
-  }, []);
-  return (beerImg &&
+  }
+
+  return (
     <Wrapper>
       <Banner>
-        {beer.nameDisplay}
+        <BannerText>{beer && beer.nameDisplay}</BannerText>
+        <Button onClick={() => generateRandomBeer()}>Random Beer!</Button>
       </Banner>
       <BottomHomeWrapper>
-        <Banner>
-          <BeerImg imagey={beer.hasLabel ? test : test}></BeerImg>
-        </Banner>
-        <Banner>{beer.abv} %</Banner>
+        <LabelWrapper>
+          <Label beerimage={labels ? labels.large : null} />
+        </LabelWrapper>
+        <StatsWrapper>
+          {beer && beer.abv} %
+        </StatsWrapper>
       </BottomHomeWrapper>
     </Wrapper>);
 };

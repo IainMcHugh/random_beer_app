@@ -6,10 +6,12 @@ import * as serviceWorker from './serviceWorker';
 
 import {ThemeProvider} from "styled-components";
 import { theme } from './components/themes/theme';
+import GlobalStyle from "./components/styles/GlobalStyle";
 
 ReactDOM.render(
   <React.StrictMode>
     <ThemeProvider theme={theme}>
+      <GlobalStyle />
       <App />
     </ThemeProvider>
   </React.StrictMode>,

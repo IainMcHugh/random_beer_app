@@ -1,12 +1,11 @@
 import React from "react";
-import { getRandomBeer } from "./API";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 
 import Navigation from "./components/Navigation";
 import Home from './components/Home';
 import Details from "./components/Details"
 
-const App = () => {
+const App: React.FC = () => {
 
   return (
     <Router>
