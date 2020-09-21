@@ -7,7 +7,8 @@ const getRandomBeer = () => {
         `https://cors-anywhere.herokuapp.com/https://sandbox-api.brewerydb.com/v2/beer/random/?hasLabels=Y&key=${process.env.REACT_APP_API_KEY}`
       )
       .then((res) => {
-        // console.log(res);
+        console.log(">getRandomBeer response:");
+        console.log(res.data.data);
         return res.data.data;
       })
       .catch((err) => {
@@ -22,6 +23,7 @@ const getBeerbyID = (id: string) => {
       `https://cors-anywhere.herokuapp.com/https://sandbox-api.brewerydb.com/v2/beer/${id}/?key=${process.env.REACT_APP_API_KEY}`
     )
     .then((res) => {
+      console.log(">getBeerByID response:");
       console.log(res.data.data);
       return res.data.data;
     })

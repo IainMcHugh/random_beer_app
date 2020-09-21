@@ -1,6 +1,5 @@
 export interface RandomBeer {
   abv: string;
-  ibu: string;
   createDate: string;
   id: string;
   isRetired: string;
@@ -11,6 +10,18 @@ export interface RandomBeer {
   style: {};
   styleId: string;
   updateDate: string;
+  labels?: Labels
+}
+
+export interface BeerInterface extends RandomBeer {
+  available: {},
+  availableId: number;
+  glass: {},
+  glasswareId: number,
+  isOrganic: string,
+  srm: {},
+  srmId: number,
+  labels: Labels
 }
 
 export interface Labels {

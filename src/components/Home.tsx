@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { getRandomBeer, getBeerbyID } from "../API";
 import { Link } from "react-router-dom";
 
-import { RandomBeer, Labels } from "../interfaces";
+import { RandomBeer, BeerInterface, Labels } from "../interfaces";
 
 import {
   Wrapper,
@@ -20,15 +20,16 @@ import {
 
 const Home = () => {
 
-  const [beer, setBeer] = useState<RandomBeer | null>(null);
-  const [label, setLabel] = useState<string | null>(null);
+  const [beer, setBeer] = useState<RandomBeer | BeerInterface | null>(null);
+  // const [beer, setBeer] = useState<any>(null);
+  // const [label, setLabel] = useState<string | null>(null);
 
   useEffect(() => {
     // generateRandomBeer();
     const currBeer = sessionStorage.getItem("beer");
     const currLabel = sessionStorage.getItem("beerLabel");
     if(currBeer) setBeer(JSON.parse(currBeer));
-    if(currLabel) setLabel(currLabel);
+    // if(currLabel) setLabel(currLabel);
   }, []);
 
   const generateRandomBeer = () => {
@@ -37,9 +38,10 @@ const Home = () => {
         setBeer(rdmBeer);
         sessionStorage.setItem("beer", JSON.stringify(rdmBeer));
         getBeerbyID(rdmBeer.id)
-          .then((beerById: any) => {
-            console.log(">Beer Labels: ", beerById.labels);
-            setLabel(beerById.labels.large);
+          .then((beerById: BeerInterface) => {
+            console.log(">beerByID ", beerById);
+            setBeer(beerById);
+            // setLabel(beerById.labels.large);
             sessionStorage.setItem("beerLabel", beerById.labels.large)
           })
           .catch((err) => console.log(err))
@@ -55,7 +57,11 @@ const Home = () => {
       </Banner>
       <BottomHomeWrapper>
         <LabelWrapper>
-          <Label beerimage={label ? label : null} />
+          {
+            beer && (
+              <Label beerimage={beer.labels ? beer.labels.large : null} />
+            )
+          }
         </LabelWrapper>
         <StatsWrapper>
           {beer && (
