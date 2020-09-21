@@ -25,8 +25,8 @@ const Home = () => {
 
   useEffect(() => {
     // generateRandomBeer();
-    const currBeer = localStorage.getItem("beer");
-    const currLabel = localStorage.getItem("beerLabel");
+    const currBeer = sessionStorage.getItem("beer");
+    const currLabel = sessionStorage.getItem("beerLabel");
     if(currBeer) setBeer(JSON.parse(currBeer));
     if(currLabel) setLabel(currLabel);
   }, []);
@@ -35,12 +35,12 @@ const Home = () => {
     getRandomBeer()
       .then((rdmBeer: RandomBeer) => {
         setBeer(rdmBeer);
-        localStorage.setItem("beer", JSON.stringify(rdmBeer));
+        sessionStorage.setItem("beer", JSON.stringify(rdmBeer));
         getBeerbyID(rdmBeer.id)
           .then((beerById: any) => {
             console.log(">Beer Labels: ", beerById.labels);
             setLabel(beerById.labels.large);
-            localStorage.setItem("beerLabel", beerById.labels.large)
+            sessionStorage.setItem("beerLabel", beerById.labels.large)
           })
           .catch((err) => console.log(err))
       })
@@ -61,10 +61,10 @@ const Home = () => {
           {beer && (
             <Stats>
               <StatsText>ABV: {beer.abv} %</StatsText>
-              <StatsText>IBU: {beer.ibu} %</StatsText>
+              {/* <StatsText>{beer.description}</StatsText> */}
               <Link to={{
                 pathname: "/details",
-                state: {beer: beer} 
+                state: {beer} 
                 }}>Get details</Link>
             </Stats>
           )} 

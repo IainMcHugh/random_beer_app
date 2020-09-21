@@ -30,7 +30,7 @@ const Details = ({ location }: Props) => {
 
   useEffect(() => {
     console.log(">Details Page..");
-    setLabel(localStorage.getItem("beerLabel"));
+    setLabel(sessionStorage.getItem("beerLabel"));
   }, [])
 
   return (
@@ -42,10 +42,8 @@ const Details = ({ location }: Props) => {
       </BottomHomeWrapper>
       <Banner>
         <BannerText>{location.state.beer.name}</BannerText>
+        <Button onClick={() => history.push("/")}>Go back</Button>
       </Banner>
-      <BottomHomeWrapper>
-        <Button onClick={() => history.push("/")}>Go back!</Button>
-      </BottomHomeWrapper>
     </Wrapper>
   )
 }
