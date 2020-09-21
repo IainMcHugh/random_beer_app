@@ -1,48 +1,46 @@
 import React, { useEffect, useState } from "react";
 import { getRandomBeer, getBeerbyID } from "../API";
+import { Link } from "react-router-dom";
 
-import { Wrapper, Banner, BannerText, BottomHomeWrapper, LabelWrapper, Label, Button, StatsWrapper } from "./styles";
+import { RandomBeer, Labels } from "../interfaces";
 
-interface RandomBeer {
-  abv: string;
-  createDate: string;
-  id: string;
-  isRetired: string;
-  name: string;
-  nameDisplay: string;
-  status: string;
-  statusDisplay: string;
-  style: {},
-  styleId: string;
-  updateDate: string;
-}
+import {
+  Wrapper,
+  Banner,
+  BannerText,
+  BottomHomeWrapper,
+  LabelWrapper,
+  Label, Button,
+  StatsWrapper,
+  Stats,
+  StatsText
+} from "./styles";
 
-interface Labels {
-  contentAwareIcon: string;
-  contentAwareLarge: string;
-  contentAwareMedium: string;
-  icon: string;
-  large: string;
-  medium: string;
-}
+
 
 const Home = () => {
 
   const [beer, setBeer] = useState<RandomBeer | null>(null);
-  const [labels, setLabels] = useState<Labels | null>(null);
+  const [label, setLabel] = useState<string | null>(null);
 
   useEffect(() => {
     // generateRandomBeer();
+    const currBeer = localStorage.getItem("beer");
+    const currLabel = localStorage.getItem("beerLabel");
+    if(currBeer) setBeer(JSON.parse(currBeer));
+    if(currLabel) setLabel(currLabel);
   }, []);
 
   const generateRandomBeer = () => {
     getRandomBeer()
       .then((rdmBeer: RandomBeer) => {
         setBeer(rdmBeer);
+        localStorage.setItem("beer", JSON.stringify(rdmBeer));
         getBeerbyID(rdmBeer.id)
           .then((beerById: any) => {
-            console.log(`>Beer Labels: ${beerById.labels}`)
-            setLabels(beerById.labels);
+            console.log(">Beer Labels: ", beerById.labels);
+            setLabel(beerById.labels.large);
+            localStorage.setItem("beerLabel", beerById.labels.large)
           })
           .catch((err) => console.log(err))
       })
@@ -57,10 +55,19 @@ const Home = () => {
       </Banner>
       <BottomHomeWrapper>
         <LabelWrapper>
-          <Label beerimage={labels ? labels.large : null} />
+          <Label beerimage={label ? label : null} />
         </LabelWrapper>
         <StatsWrapper>
-          {beer && beer.abv} %
+          {beer && (
+            <Stats>
+              <StatsText>ABV: {beer.abv} %</StatsText>
+              <StatsText>IBU: {beer.ibu} %</StatsText>
+              <Link to={{
+                pathname: "/details",
+                state: {beer: beer} 
+                }}>Get details</Link>
+            </Stats>
+          )} 
         </StatsWrapper>
       </BottomHomeWrapper>
     </Wrapper>);

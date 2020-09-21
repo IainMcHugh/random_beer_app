@@ -11,7 +11,7 @@ const App: React.FC = () => {
     <Router>
         <Navigation />
         <Route path="/" exact component={Home} />
-        <Route path="/:id" exact component={Details} />
+        <Route path="/details" exact component={Details} />
     </Router>
   );
 };

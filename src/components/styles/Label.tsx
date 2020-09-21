@@ -1,4 +1,4 @@
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 
 import defaultImg from '../../assets/images/no-image-size740x480.jpg';
 

@@ -4,7 +4,7 @@ import { Wrapper } from "./Wrapper";
 import { Banner, BannerText } from "./Banner";
 import { BottomHomeWrapper } from "./BottomHomeWrapper";
 import { LabelWrapper, Label } from "./Label";
-import { StatsWrapper, Stats } from "./Stats";
+import { StatsWrapper, Stats, StatsText } from "./Stats";
 import { Button } from "./Button";
 
 export {
@@ -19,5 +19,6 @@ export {
   Label,
   Button,
   StatsWrapper,
-  Stats
+  Stats,
+  StatsText
 };

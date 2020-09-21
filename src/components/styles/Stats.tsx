@@ -1,7 +1,5 @@
 import styled from 'styled-components';
 
-import defaultImg from '../../assets/images/no-image-size740x480.jpg';
-
 export const Stats = styled.div`
     width: 100%;
     height: 100%;
@@ -26,5 +24,20 @@ export const StatsWrapper = styled.section`
         width: 55%;
         height: 60vh;
         margin: 20px 0;
+    }
+`;
+
+export const StatsText = styled.p`
+    color: ${({ theme }) => theme.colours.deep};
+    font-family: 'Poppins', sans-serif;
+    font-size: ${({ theme }) => theme.fontSize.small};
+    font-weight: 200;
+  
+    @media ${({ theme }) => theme.mediaQ.gt500} {
+        font-size: ${({ theme }) => theme.fontSize.medium};
+    }
+    
+    @media ${({ theme }) => theme.mediaQ.gt768} {
+        font-size: ${({ theme }) => theme.fontSize.large};
     }
 `;
