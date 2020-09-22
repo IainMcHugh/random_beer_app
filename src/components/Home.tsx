@@ -14,7 +14,9 @@ import {
   InfoWrapper,
   Info,
   InfoText,
-  LinkWrapper
+  LinkWrapper,
+  ErrorWrapper,
+  ErrorItem
 } from "./styles";
 
 
@@ -54,34 +56,24 @@ const Home = () => {
     try {
       const rdmBeer: RandomBeer = await getRandomBeer();
       setBeer(rdmBeer);
-      try {
-        const beerById: BeerInterface = await getBeerbyID(rdmBeer.id);
-        setBeer(beerById);
-        sessionStorage.setItem("beer", JSON.stringify(beerById));
-
-        try {
-          const breweryByBeer: BreweryShortInterface = await getBreweryByBeer(rdmBeer.id);
-          console.log(breweryByBeer);
-          setBrewery(breweryByBeer);
-        } catch (error3) {
-          console.log(`>try getBreweryByBeer Error: ${error3}`);
-          setError(error3);
-        }
-
-      } catch (error1) {
-        console.log(`>try getBeerByID Error: ${error1}`);
-        setError(error1);
-      }
-    } catch (error2) {
-      console.log(`>try getRandomBeer Error: ${error2}`);
-      setError(error2);
+      const beerById: BeerInterface = await getBeerbyID(rdmBeer.id);
+      setBeer(beerById);
+      sessionStorage.setItem("beer", JSON.stringify(beerById));
+      const breweryByBeer: BreweryShortInterface = await getBreweryByBeer(rdmBeer.id);
+      console.log(breweryByBeer);
+      setBrewery(breweryByBeer);
+    } catch (err) {
+      console.log(`>generateRandomBeer Error: ${err}`);
+      setError(err);
+      setTimeout(() => {
+        setError(null);
+      }, 3000)
     }
   }
 
   return (
     <Wrapper>
       <Banner>
-        {error && <BannerText>{error.message}</BannerText>}
         <BannerText>Random Beer Generator</BannerText>
         <Button onClick={(e) => generateRandomBeer(e)}>Random Beer!</Button>
       </Banner>
@@ -104,6 +96,9 @@ const Home = () => {
           </InfoWrapper>
         </BottomHomeWrapper>
       )}
+      {error && <ErrorWrapper>
+        <ErrorItem>{error.message}</ErrorItem>
+      </ErrorWrapper>}
     </Wrapper>);
 };
 

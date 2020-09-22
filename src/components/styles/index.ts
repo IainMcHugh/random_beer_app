@@ -7,6 +7,7 @@ import { LabelWrapper, Label } from "./Label";
 import { InfoWrapper, Info, InfoText } from "./Info";
 import { Button } from "./Button";
 import { LinkWrapper } from "./LinkWrapper";
+import { ErrorWrapper, ErrorItem } from "./ErrorWrapper";
 
 export {
   Navbar,
@@ -22,5 +23,7 @@ export {
   InfoWrapper,
   Info,
   InfoText,
-  LinkWrapper
+  LinkWrapper,
+  ErrorWrapper,
+  ErrorItem
 };
