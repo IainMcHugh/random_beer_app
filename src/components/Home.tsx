@@ -20,7 +20,6 @@ import {
 } from "./styles";
 
 
-
 const Home = () => {
 
   const [beer, setBeer] = useState<RandomBeer | BeerInterface | null>(null);
@@ -28,27 +27,12 @@ const Home = () => {
   const [error, setError] = useState<Error | null>(null);
 
   useEffect(() => {
-    // generateRandomBeer();
+    // generateRandomBeer(); UNCOMMENT BEFORE SUBMISSION!!
     const currBeer = sessionStorage.getItem("beer");
     const currBrewery = sessionStorage.getItem("brewery");
     if (currBeer) setBeer(JSON.parse(currBeer));
     if (currBrewery) setBrewery(JSON.parse(currBrewery));
   }, []);
-
-  // const generateRandomBeer = () => {
-  //   getRandomBeer()
-  //     .then((rdmBeer: RandomBeer) => {
-  //       setBeer(rdmBeer);
-  //       getBeerbyID(rdmBeer.id)
-  //         .then((beerById: BeerInterface) => {
-  //           console.log(">beerByID ", beerById);
-  //           setBeer(beerById);
-  //           sessionStorage.setItem("beer", JSON.stringify(beerById));
-  //         })
-  //         .catch((err) => console.log(err))
-  //     })
-  //     .catch((err) => console.log(err));
-  // }
 
   const generateRandomBeer = async (e: React.MouseEvent<HTMLButtonElement>) => {
     // clear sessionStorage

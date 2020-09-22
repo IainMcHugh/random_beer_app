@@ -4,7 +4,7 @@ const getRandomBeer = async () => {
   console.log(">getRandomBeer executing..");
   try {
     const res: AxiosResponse = await axios.get(
-      `https://sscors-anywhere.herokuapp.com/https://sandbox-api.brewerydb.com/v2/beer/random/?hasLabels=Y&withBreweries=Y&key=${process.env.REACT_APP_MY_API_KEY}`
+      `https://cors-anywhere.herokuapp.com/https://sandbox-api.brewerydb.com/v2/beer/random/?hasLabels=Y&withBreweries=Y&key=${process.env.REACT_APP_MY_API_KEY}`
     );
     console.log(">getRandomBeer response:");
     // console.log(res.data.data);
