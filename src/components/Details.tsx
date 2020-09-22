@@ -11,9 +11,9 @@ import {
   BannerText,
   BottomHomeWrapper,
   LabelWrapper,
-  Label, Button,
+  Label, 
+  Button,
   InfoWrapper,
-  Info,
   InfoText,
   ErrorWrapper,
   ErrorItem
@@ -57,6 +57,10 @@ const Details = ({ location: { state: { beer, breweryid } } }: Props) => {
 
   return (
     <Wrapper>
+      <Banner>
+        <BannerText>{beer.name}</BannerText>
+        <Button onClick={() => history.push("/")}>Go back</Button>
+      </Banner>
       {brewery && (
         <BottomHomeWrapper>
           <LabelWrapper>
@@ -69,10 +73,7 @@ const Details = ({ location: { state: { beer, breweryid } } }: Props) => {
           </InfoWrapper>
         </BottomHomeWrapper>
       )}
-      <Banner>
-        <BannerText>{beer.name}</BannerText>
-        <Button onClick={() => history.push("/")}>Go back</Button>
-      </Banner>
+      
       {error && <ErrorWrapper>
         <ErrorItem>{error.message}</ErrorItem>
       </ErrorWrapper>}

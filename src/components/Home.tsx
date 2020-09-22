@@ -27,14 +27,14 @@ const Home = () => {
   const [error, setError] = useState<Error | null>(null);
 
   useEffect(() => {
-    // generateRandomBeer(); UNCOMMENT BEFORE SUBMISSION!!
     const currBeer = sessionStorage.getItem("beer");
     const currBrewery = sessionStorage.getItem("brewery");
     if (currBeer) setBeer(JSON.parse(currBeer));
+    else generateRandomBeer();
     if (currBrewery) setBrewery(JSON.parse(currBrewery));
   }, []);
 
-  const generateRandomBeer = async (e: React.MouseEvent<HTMLButtonElement>) => {
+  const generateRandomBeer = async () => {
     // clear sessionStorage
     sessionStorage.clear();
     try {
@@ -59,7 +59,7 @@ const Home = () => {
     <Wrapper>
       <Banner>
         <BannerText>Random Beer Generator</BannerText>
-        <Button onClick={(e) => generateRandomBeer(e)}>Random Beer!</Button>
+        <Button onClick={() => generateRandomBeer()}>Random Beer!</Button>
       </Banner>
       {beer && (
         <BottomHomeWrapper>
