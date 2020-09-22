@@ -4,8 +4,9 @@ import { Wrapper } from "./Wrapper";
 import { Banner, BannerText } from "./Banner";
 import { BottomHomeWrapper } from "./BottomHomeWrapper";
 import { LabelWrapper, Label } from "./Label";
-import { StatsWrapper, Stats, StatsText } from "./Stats";
+import { InfoWrapper, Info, InfoText } from "./Info";
 import { Button } from "./Button";
+import { LinkWrapper } from "./LinkWrapper";
 
 export {
   Navbar,
@@ -18,7 +19,8 @@ export {
   LabelWrapper,
   Label,
   Button,
-  StatsWrapper,
-  Stats,
-  StatsText
+  InfoWrapper,
+  Info,
+  InfoText,
+  LinkWrapper
 };

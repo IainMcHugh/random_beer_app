@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { getRandomBeer, getBeerbyID } from "../API";
+import { getRandomBeer, getBeerbyID, getBreweryByBeer } from "../API";
 import { Link } from "react-router-dom";
 
-import { RandomBeer, BeerInterface, Labels } from "../interfaces";
+import { RandomBeer, BeerInterface, BreweryShortInterface } from "../interfaces";
 
 import {
   Wrapper,
@@ -11,9 +11,10 @@ import {
   BottomHomeWrapper,
   LabelWrapper,
   Label, Button,
-  StatsWrapper,
-  Stats,
-  StatsText
+  InfoWrapper,
+  Info,
+  InfoText,
+  LinkWrapper
 } from "./styles";
 
 
@@ -21,61 +22,88 @@ import {
 const Home = () => {
 
   const [beer, setBeer] = useState<RandomBeer | BeerInterface | null>(null);
-  // const [beer, setBeer] = useState<any>(null);
-  // const [label, setLabel] = useState<string | null>(null);
+  const [brewery, setBrewery] = useState<BreweryShortInterface | null>(null);
+  const [error, setError] = useState<Error | null>(null);
 
   useEffect(() => {
     // generateRandomBeer();
     const currBeer = sessionStorage.getItem("beer");
-    const currLabel = sessionStorage.getItem("beerLabel");
-    if(currBeer) setBeer(JSON.parse(currBeer));
-    // if(currLabel) setLabel(currLabel);
+    const currBrewery = sessionStorage.getItem("brewery");
+    if (currBeer) setBeer(JSON.parse(currBeer));
+    if (currBrewery) setBrewery(JSON.parse(currBrewery));
   }, []);
 
-  const generateRandomBeer = () => {
-    getRandomBeer()
-      .then((rdmBeer: RandomBeer) => {
-        setBeer(rdmBeer);
-        sessionStorage.setItem("beer", JSON.stringify(rdmBeer));
-        getBeerbyID(rdmBeer.id)
-          .then((beerById: BeerInterface) => {
-            console.log(">beerByID ", beerById);
-            setBeer(beerById);
-            // setLabel(beerById.labels.large);
-            sessionStorage.setItem("beerLabel", beerById.labels.large)
-          })
-          .catch((err) => console.log(err))
-      })
-      .catch((err) => console.log(err));
+  // const generateRandomBeer = () => {
+  //   getRandomBeer()
+  //     .then((rdmBeer: RandomBeer) => {
+  //       setBeer(rdmBeer);
+  //       getBeerbyID(rdmBeer.id)
+  //         .then((beerById: BeerInterface) => {
+  //           console.log(">beerByID ", beerById);
+  //           setBeer(beerById);
+  //           sessionStorage.setItem("beer", JSON.stringify(beerById));
+  //         })
+  //         .catch((err) => console.log(err))
+  //     })
+  //     .catch((err) => console.log(err));
+  // }
+
+  const generateRandomBeer = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    // clear sessionStorage
+    sessionStorage.clear();
+    try {
+      const rdmBeer: RandomBeer = await getRandomBeer();
+      setBeer(rdmBeer);
+      try {
+        const beerById: BeerInterface = await getBeerbyID(rdmBeer.id);
+        setBeer(beerById);
+        sessionStorage.setItem("beer", JSON.stringify(beerById));
+
+        try {
+          const breweryByBeer: BreweryShortInterface = await getBreweryByBeer(rdmBeer.id);
+          console.log(breweryByBeer);
+          setBrewery(breweryByBeer);
+        } catch (error3) {
+          console.log(`>try getBreweryByBeer Error: ${error3}`);
+          setError(error3);
+        }
+
+      } catch (error1) {
+        console.log(`>try getBeerByID Error: ${error1}`);
+        setError(error1);
+      }
+    } catch (error2) {
+      console.log(`>try getRandomBeer Error: ${error2}`);
+      setError(error2);
+    }
   }
 
   return (
     <Wrapper>
       <Banner>
-        <BannerText>{beer && beer.nameDisplay}</BannerText>
-        <Button onClick={() => generateRandomBeer()}>Random Beer!</Button>
+        {error && <BannerText>{error.message}</BannerText>}
+        <BannerText>Random Beer Generator</BannerText>
+        <Button onClick={(e) => generateRandomBeer(e)}>Random Beer!</Button>
       </Banner>
-      <BottomHomeWrapper>
-        <LabelWrapper>
-          {
-            beer && (
-              <Label beerimage={beer.labels ? beer.labels.large : null} />
-            )
-          }
-        </LabelWrapper>
-        <StatsWrapper>
-          {beer && (
-            <Stats>
-              <StatsText>ABV: {beer.abv} %</StatsText>
-              {/* <StatsText>{beer.description}</StatsText> */}
-              <Link to={{
-                pathname: "/details",
-                state: {beer} 
-                }}>Get details</Link>
-            </Stats>
-          )} 
-        </StatsWrapper>
-      </BottomHomeWrapper>
+      {beer && (
+        <BottomHomeWrapper>
+          <LabelWrapper>
+            <Label beerimage={beer.labels ? beer.labels.large : null} />
+          </LabelWrapper>
+          <InfoWrapper>
+            <InfoText infotype="title">{beer.nameDisplay}</InfoText>
+            <InfoText infotype="description">{beer.style.description}</InfoText>
+            {brewery &&
+              <LinkWrapper>
+                <Link to={{
+                  pathname: "/details",
+                  state: { beer, breweryid: brewery.id }
+                }}> {brewery.name}
+                </Link>
+              </LinkWrapper>}
+          </InfoWrapper>
+        </BottomHomeWrapper>
+      )}
     </Wrapper>);
 };
 

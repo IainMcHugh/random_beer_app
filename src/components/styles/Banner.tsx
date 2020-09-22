@@ -20,6 +20,7 @@ export const Banner = styled.section`
 `;
 
 export const BannerText = styled.p`
+    text-transform: capitalize;
     flex-grow: 0;
     color: ${({ theme }) => theme.colours.deep};
     font-family: 'Poppins', sans-serif;
