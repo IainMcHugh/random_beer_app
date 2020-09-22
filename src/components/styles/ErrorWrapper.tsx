@@ -1,4 +1,10 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
+
+const errorAnimation = keyframes`
+    0% { transform: scale(0) }
+    60% { transform: scale(1.05) }
+    100% { transform: scale(1) }
+`;
 
 export const ErrorWrapper = styled.section`
     width: 20%;
@@ -9,7 +15,6 @@ export const ErrorWrapper = styled.section`
     flex-direction: column;
     justify-content: center;
     align-items: center;
-
 `;
 
 export const ErrorItem = styled.section`
@@ -24,4 +29,8 @@ export const ErrorItem = styled.section`
     display: flex;
     justify-content: center;
     align-items: center;
+    animation-name: ${errorAnimation};
+    animation-duration: 400ms;
+    animation-fill-mode: forwards;
+    animation-timing-function: ease-in-out;
 `;

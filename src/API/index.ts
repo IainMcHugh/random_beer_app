@@ -4,7 +4,7 @@ const getRandomBeer = async () => {
   console.log(">getRandomBeer executing..");
   try {
     const res: AxiosResponse = await axios.get(
-      `https://cors-anywhere.herokuapp.com/https://sandbox-api.brewerydb.com/v2/beer/random/?hasLabels=Y&withBreweries=Y&key=${process.env.REACT_APP_API_KEY}`
+      `https://sscors-anywhere.herokuapp.com/https://sandbox-api.brewerydb.com/v2/beer/random/?hasLabels=Y&withBreweries=Y&key=${process.env.REACT_APP_MY_API_KEY}`
     );
     console.log(">getRandomBeer response:");
     // console.log(res.data.data);
@@ -19,7 +19,7 @@ const getBeerbyID = async (id: string) => {
   try {
     const res = await axios
       .get(
-        `https://cors-anywhere.herokuapp.com/https://sandbox-api.brewerydb.com/v2/beer/${id}/?key=${process.env.REACT_APP_API_KEY}`
+        `https://cors-anywhere.herokuapp.com/https://sandbox-api.brewerydb.com/v2/beer/${id}/?key=${process.env.REACT_APP_MY_API_KEY}`
       );
     console.log(">getBeerByID response:");
     console.log(res.data.data);
@@ -34,7 +34,7 @@ const getBreweryByBeer = async (id: string) => {
   try {
     const res = await axios
       .get(
-        `https://cors-anywhere.herokuapp.com/https://sandbox-api.brewerydb.com/v2/beer/${id}/breweries/?key=${process.env.REACT_APP_API_KEY}`
+        `https://cors-anywhere.herokuapp.com/https://sandbox-api.brewerydb.com/v2/beer/${id}/breweries/?key=${process.env.REACT_APP_MY_API_KEY}`
       );
     console.log(">getBreweryByBeer response:");
     return res.data.data[0];
@@ -49,7 +49,7 @@ const getBreweryByID = async (id: string) => {
   try {
     const res = await axios
       .get(
-        `https://cors-anywhere.herokuapp.com/https://sandbox-api.brewerydb.com/v2/brewery/${id}/?key=${process.env.REACT_APP_API_KEY}`
+        `https://cors-anywhere.herokuapp.com/https://sandbox-api.brewerydb.com/v2/brewery/${id}/?key=${process.env.REACT_APP_MY_API_KEY}`
       );
     console.log(">getBreweryByID response:");
     console.log(res.data.data);
