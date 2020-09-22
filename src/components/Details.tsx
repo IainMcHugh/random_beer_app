@@ -14,7 +14,9 @@ import {
   Label, Button,
   InfoWrapper,
   Info,
-  InfoText
+  InfoText,
+  ErrorWrapper,
+  ErrorItem
 } from "./styles";
 
 interface Props {
@@ -28,7 +30,7 @@ interface Props {
 
 const Details = ({ location: { state: { beer, breweryid } } }: Props) => {
   const [brewery, setBrewery] = useState<BreweryInterface | null>(null);
-
+  const [error, setError] = useState<Error | null>(null);
   let history = useHistory();
 
   const getBreweryDetails = async () => {
@@ -39,6 +41,10 @@ const Details = ({ location: { state: { beer, breweryid } } }: Props) => {
       sessionStorage.setItem("brewery", JSON.stringify(res));
     } catch (error) {
       console.log(error);
+      setError(error);
+      setTimeout(()=> {
+        setError(null);
+      }, 3000);
     }
   }
 
@@ -67,6 +73,9 @@ const Details = ({ location: { state: { beer, breweryid } } }: Props) => {
         <BannerText>{beer.name}</BannerText>
         <Button onClick={() => history.push("/")}>Go back</Button>
       </Banner>
+      {error && <ErrorWrapper>
+        <ErrorItem>{error.message}</ErrorItem>
+      </ErrorWrapper>}
     </Wrapper>
   )
 }
