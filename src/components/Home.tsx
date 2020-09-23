@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { getRandomBeer, getBeerbyID, getBreweryByBeer } from "../API";
 import { Link } from "react-router-dom";
 
-import { RandomBeer, BeerInterface, BreweryShortInterface } from "../interfaces";
+import { BeerInterface, BreweryShortInterface } from "../interfaces";
 
 import {
   Wrapper,
@@ -22,7 +22,7 @@ import {
 
 const Home = () => {
 
-  const [beer, setBeer] = useState<RandomBeer | BeerInterface | null>(null);
+  const [beer, setBeer] = useState<BeerInterface | null>(null);
   const [brewery, setBrewery] = useState<BreweryShortInterface | null>(null);
   const [error, setError] = useState<Error | null>(null);
 
@@ -38,10 +38,11 @@ const Home = () => {
     // clear sessionStorage
     sessionStorage.clear();
     try {
-      const rdmBeer: RandomBeer = await getRandomBeer();
+      const rdmBeer: BeerInterface = await getRandomBeer();
       setBeer(rdmBeer);
       const beerById: BeerInterface = await getBeerbyID(rdmBeer.id);
-      setBeer(beerById);
+      // setBeer(beerById);
+      setBeer(beer => ({ ...beer, ...beerById }));
       sessionStorage.setItem("beer", JSON.stringify(beerById));
       const breweryByBeer: BreweryShortInterface = await getBreweryByBeer(rdmBeer.id);
       console.log(breweryByBeer);

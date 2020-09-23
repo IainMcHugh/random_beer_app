@@ -8,7 +8,6 @@ export const Info = styled.div`
     display: flex;
     justify-content: flex-end;
     align-items: flex-end;
-    /* align-content: flex-end; */
     flex-direction: column;
 `;
 

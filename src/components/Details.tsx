@@ -3,7 +3,7 @@ import { useHistory } from "react-router-dom";
 
 import { getBreweryByID } from "../API";
 
-import { RandomBeer, BreweryInterface } from "../interfaces";
+import { BeerInterface, BreweryInterface } from "../interfaces";
 
 import {
   Wrapper,
@@ -22,7 +22,7 @@ import {
 interface Props {
   location: {
     state: {
-      beer: RandomBeer;
+      beer: BeerInterface;
       breweryid: string;
     }
   };

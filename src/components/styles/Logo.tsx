@@ -12,7 +12,6 @@ export const LogoWrapper = styled.div`
 `;
 
 export const Logo = styled.img`
-    /* background-image: url(${logoImg}); */
     height: 100%;
     width: 100%;
     background-size: contain;

@@ -1,6 +1,4 @@
-import { StringLiteral } from "typescript";
-
-export interface RandomBeer {
+export interface BeerInterface {
   abv: string;
   createDate: string;
   id: string;
@@ -14,18 +12,14 @@ export interface RandomBeer {
   };
   styleId: string;
   updateDate: string;
+  available?: {},
+  availableId?: number;
+  glass?: {},
+  glasswareId?: number,
+  isOrganic?: string,
+  srm?: {},
+  srmId?: number,
   labels?: Labels
-}
-
-export interface BeerInterface extends RandomBeer {
-  available: {},
-  availableId: number;
-  glass: {},
-  glasswareId: number,
-  isOrganic: string,
-  srm: {},
-  srmId: number,
-  labels: Labels
 }
 
 export interface Labels {

@@ -10,7 +10,6 @@ export const Label = styled.img<Props>`
     width: 100%;
     height: 100%;
     border-radius: 50px;
-    /* border-radius: 5%; */
     background-image: url(${({ beerimage }) => beerimage ? beerimage : defaultImg});
     background-position: center;
     background-size: cover;
@@ -26,7 +25,6 @@ export const LabelWrapper = styled.div`
     height: 40vh;
     margin: 10px 0; 
     border-radius: 50px;
-    /* border-radius: 5%; */
     background-color: ${({ theme }) => theme.colours.light};
     box-shadow: ${({ theme }) => theme.boxShadow};
     text-align: center;

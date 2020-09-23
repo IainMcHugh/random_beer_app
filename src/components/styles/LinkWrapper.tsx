@@ -3,7 +3,6 @@ import styled from "styled-components";
 export const LinkWrapper = styled.div`
     width: 50%;
     margin: 20px 10px;
-    /* flex-grow: 0; */
     align-self: flex-end;
     padding: 20px 10px;
     border: none;

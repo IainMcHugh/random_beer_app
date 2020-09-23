@@ -8,14 +8,6 @@ export const theme = {
         primary: '#ef233cff',
         secondary: '#d90429ff',
     },
-    // colours2: {
-    //     c1: '#44355b',
-    //     c2: '#31263e',
-    //     c3: '#221e22',
-    //     c4: '#eca72c',
-    //     c5: '#ee5622',
-    //     c6: '#eeeeee'
-    // },
     fontSize: {
         small: '1rem',
         medium: '1.2rem',
